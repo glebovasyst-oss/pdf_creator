@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Счёт {{ invoice_id }}</title>
+  <style>
+    @font-face {
+      font-family: "DejaVu Sans";
+      src: url("fonts/DejaVuSans.ttf");
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "DejaVu Sans";
+      src: url("fonts/DejaVuSans-Bold.ttf");
+      font-weight: bold;
+      font-style: normal;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "DejaVu Sans", "Roboto", "Arial", sans-serif;
+      font-size: 11pt;
+      color: #222;
+      padding: 48px;
+      line-height: 1.45;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 36px;
+      border-bottom: 3px solid #1e3a5f;
+      padding-bottom: 16px;
+    }
+
+    .brand {
+      font-size: 22pt;
+      font-weight: bold;
+      color: #1e3a5f;
+    }
+
+    .doc-title {
+      text-align: right;
+      color: #555;
+    }
+
+    .doc-title strong {
+      display: block;
+      font-size: 16pt;
+      color: #1e3a5f;
+      margin-bottom: 4px;
+    }
+
+    .info-grid {
+      width: 100%;
+      margin-bottom: 28px;
+      border-collapse: collapse;
+    }
+
+    .info-grid td {
+      width: 50%;
+      vertical-align: top;
+      padding: 4px 12px 4px 0;
+    }
+
+    .label {
+      font-size: 9pt;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+    }
+
+    .value {
+      font-size: 12pt;
+      font-weight: bold;
+    }
+
+    table.lines {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table.lines th {
+      background: #1e3a5f;
+      color: #fff;
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 10pt;
+    }
+
+    table.lines th.num {
+      text-align: right;
+    }
+
+    table.lines td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #dde3ea;
+    }
+
+    table.lines td.num {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    table.lines tr:nth-child(even) td {
+      background: #f7f9fb;
+    }
+
+    .totals {
+      margin-top: 8px;
+      margin-left: auto;
+      width: 280px;
+    }
+
+    .totals .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .totals .grand {
+      font-size: 14pt;
+      font-weight: bold;
+      border-top: 2px solid #1e3a5f;
+      margin-top: 6px;
+      padding-top: 10px;
+      color: #1e3a5f;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 6px 14px;
+      background: #e8f0fe;
+      color: #1e3a5f;
+      font-size: 10pt;
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 48px;
+      font-size: 9pt;
+      color: #999;
+      border-top: 1px solid #ddd;
+      padding-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand">PDF Чек</div>
+    <div class="doc-title">
+      <strong>Счёт / Invoice</strong>
+      {{ invoice_id }}
+    </div>
+  </div>
+
+  <table class="info-grid">
+    <tr>
+      <td>
+        <div class="label">Покупатель</div>
+        <div class="value">{{ customer }}</div>
+        {% if customer_email %}<div>{{ customer_email }}</div>{% endif %}
+      </td>
+      <td>
+        <div class="label">Дата выставления</div>
+        <div class="value">{{ date }}</div>
+      </td>
+    </tr>
+  </table>
+
+  {% if items_list %}
+  <table class="lines">
+    <thead>
+      <tr>
+        <th>Наименование</th>
+        <th class="num">Кол-во</th>
+        <th class="num">Цена</th>
+        <th class="num">Сумма</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items_list %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td class="num">{{ item.qty }}</td>
+        <td class="num">{{ item.price }} {{ currency }}</td>
+        <td class="num">{{ item.line_total }} {{ currency }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% elif items %}
+  <p><strong>Состав заказа:</strong> {{ items }}</p>
+  {% endif %}
+
+  <div class="totals">
+    <div class="row grand">
+      <span>Итого к оплате</span>
+      <span>{{ amount }} {{ currency }}</span>
+    </div>
+  </div>
+
+  {% if status %}
+  <div class="badge">Статус: {{ status }}</div>
+  {% endif %}
+
+  <div class="footer">
+    Документ сформирован автоматически. Номер: {{ invoice_id }}.
+  </div>
+</body>
+</html>

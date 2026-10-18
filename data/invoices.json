@@ -1,0 +1,42 @@
+[
+  {
+    "invoice_id": "INV-101",
+    "date": "2026-10-08",
+    "customer": "Анна Волкова",
+    "customer_email": "anna.volkova@example.com",
+    "items": [
+      {"name": "Кофемашина", "qty": 1, "price": 24990},
+      {"name": "Набор чашек", "qty": 1, "price": 1990}
+    ],
+    "amount": 26980,
+    "currency": "RUB",
+    "status": "оплачен"
+  },
+  {
+    "invoice_id": "INV-102",
+    "date": "2026-10-11",
+    "customer": "Дмитрий Орлов",
+    "customer_email": "d.orlov@example.com",
+    "items": [
+      {"name": "Смартфон", "qty": 1, "price": 54990},
+      {"name": "Чехол", "qty": 2, "price": 990},
+      {"name": "Защитное стекло", "qty": 1, "price": 790}
+    ],
+    "amount": 57760,
+    "currency": "RUB",
+    "status": "ожидает"
+  },
+  {
+    "invoice_id": "INV-103",
+    "date": "2026-10-16",
+    "customer": "ИП Смирнов П.А.",
+    "customer_email": "smirnov.pa@business.ru",
+    "items": [
+      {"name": "Лицензия CRM (год)", "qty": 5, "price": 12000},
+      {"name": "Обучение персонала", "qty": 1, "price": 25000}
+    ],
+    "amount": 85000,
+    "currency": "RUB",
+    "status": "оплачен"
+  }
+]

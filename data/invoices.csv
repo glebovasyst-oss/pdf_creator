@@ -1,0 +1,5 @@
+invoice_id,date,customer,customer_email,items,amount,currency,status
+INV-001,2026-10-10,Иван Петров,ivan.petrov@example.com,"Ноутбук — 1 × 65000; Мышь — 2 × 1500",68000,RUB,оплачен
+INV-002,2026-10-12,Мария Сидорова,maria.s@example.com,"Клавиатура — 1 × 4500; Наушники — 1 × 7800",12300,RUB,ожидает
+INV-003,2026-10-14,ООО «ТехноСфера»,office@technosphera.ru,"Монитор 27"" — 2 × 22000; Кабель HDMI — 3 × 800",46400,RUB,оплачен
+INV-004,2026-10-15,Алексей Кузнецов,a.kuznetsov@mail.ru,"Подписка Pro (12 мес.) — 1 × 5990",5990,RUB,оплачен

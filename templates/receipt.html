@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Чек {{ invoice_id }}</title>
+  <style>
+    @font-face {
+      font-family: "DejaVu Sans";
+      src: url("fonts/DejaVuSans.ttf");
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "DejaVu Sans";
+      src: url("fonts/DejaVuSans-Bold.ttf");
+      font-weight: bold;
+      font-style: normal;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "DejaVu Sans", "Roboto", "Arial", sans-serif;
+      font-size: 12pt;
+      color: #1a1a1a;
+      padding: 40px;
+      line-height: 1.5;
+    }
+
+    .receipt {
+      max-width: 520px;
+      margin: 0 auto;
+      border: 2px solid #222;
+      padding: 28px 32px;
+    }
+
+    h1 {
+      font-size: 20pt;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #555;
+      margin-bottom: 24px;
+      font-size: 10pt;
+    }
+
+    .meta {
+      width: 100%;
+      margin-bottom: 20px;
+      border-collapse: collapse;
+    }
+
+    .meta td {
+      padding: 4px 0;
+      vertical-align: top;
+    }
+
+    .meta td:first-child {
+      color: #666;
+      width: 40%;
+    }
+
+    .meta td:last-child {
+      font-weight: bold;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px dashed #999;
+      margin: 16px 0;
+    }
+
+    .items {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 12px;
+    }
+
+    .items th {
+      text-align: left;
+      font-size: 9pt;
+      color: #666;
+      border-bottom: 1px solid #ccc;
+      padding: 6px 4px;
+    }
+
+    .items td {
+      padding: 8px 4px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+    }
+
+    .items .qty, .items .price {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 16px;
+      font-size: 14pt;
+      font-weight: bold;
+    }
+
+    .status {
+      margin-top: 20px;
+      text-align: center;
+      padding: 8px;
+      background: #f0f0f0;
+      font-size: 11pt;
+    }
+
+    .footer {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 9pt;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="receipt">
+    <h1>Кассовый чек</h1>
+    <p class="subtitle">Электронный документ</p>
+
+    <table class="meta">
+      <tr>
+        <td>Номер чека</td>
+        <td>{{ invoice_id }}</td>
+      </tr>
+      <tr>
+        <td>Дата</td>
+        <td>{{ date }}</td>
+      </tr>
+      <tr>
+        <td>Покупатель</td>
+        <td>{{ customer }}</td>
+      </tr>
+      {% if customer_email %}
+      <tr>
+        <td>Email</td>
+        <td>{{ customer_email }}</td>
+      </tr>
+      {% endif %}
+    </table>
+
+    <hr class="divider">
+
+    {% if items_list %}
+    <table class="items">
+      <thead>
+        <tr>
+          <th>Товар / услуга</th>
+          <th class="qty">Кол-во</th>
+          <th class="price">Сумма</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items_list %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td class="qty">{{ item.qty }}</td>
+          <td class="price">{{ item.line_total }} {{ currency }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% elif items %}
+    <p>{{ items }}</p>
+    {% endif %}
+
+    <hr class="divider">
+
+    <div class="total-row">
+      <span>Итого</span>
+      <span>{{ amount }} {{ currency }}</span>
+    </div>
+
+    {% if status %}
+    <div class="status">Статус: {{ status }}</div>
+    {% endif %}
+
+    <p class="footer">Спасибо за покупку!</p>
+  </div>
+</body>
+</html>
